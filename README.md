@@ -11,14 +11,15 @@
 
 ## Model 1
  - KoBERT(Pretrained on base-v1)
-
+   - [Question] 을 통해 [감정_소분류] 를 학습한다.
 ## Model 2
  - KoGPT2
-
+   - [감정_소분류]와 [Question] 을 통해 [Answer]를 학습한다.
+     - 이 때, 감정 토큰에 대한 Forced Attention 기법 도입
 ## Model 3
 - 1) [Question]을 통해 [감정_소분류]를 추론한다.
 - 2) 예측한 [감정_소분류] 와 [Question] 을 통해 [Answer]를 추론한다
-  - 이 때, 감정 토큰에 대한 Forced Attention 기법 도입
+
 
 
 
@@ -38,4 +39,5 @@
 
 # pip install mxnet-mkl==1.6.0 numpy==1.23.1
 # pip install openpyxl
+# pip install pytorch-lightning
 ```
