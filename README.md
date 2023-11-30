@@ -12,7 +12,7 @@
 ## Model 1
  - KoBERT(Pretrained on base-v1)
    - [Question] 을 통해 [감정_소분류] 를 학습한다.
-   - DownLoad Weight and  [Pre-Trained Weight](https://drive.google.com/drive/u/0/folders/1V4v0ppYLoDvwemRnVpd-0QCYnCnqDSsl)
+   - [Pre-Trained Weight](https://drive.google.com/drive/u/0/folders/1V4v0ppYLoDvwemRnVpd-0QCYnCnqDSsl)
 
 ## Model 2
  - KoGPT2
@@ -29,7 +29,7 @@
 ### SETTING
 
 #### Computing environment
-- OS: Ubuntu 18.04.6
+- OS: Ubuntu 20.04.6 LTS
 - GPU : RTX 4090
 
 #### Version
