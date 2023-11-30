@@ -12,32 +12,55 @@
 ## Model 1
  - KoBERT(Pretrained on base-v1)
    - [Question] 을 통해 [감정_소분류] 를 학습한다.
+   - DownLoad Weight and  [Pre-Trained Weight](https://drive.google.com/drive/u/0/folders/1V4v0ppYLoDvwemRnVpd-0QCYnCnqDSsl)
+
 ## Model 2
  - KoGPT2
    - [감정_소분류]와 [Question] 을 통해 [Answer]를 학습한다.
      - 이 때, 감정 토큰에 대한 Forced Attention 기법 도입
+   - [Pre-Trained Weight](https://drive.google.com/drive/u/0/folders/13MgcxhXt_BPmEg9-LK1y8Af2gPoBrRI2)
+
 ## Model 3
 - 1) [Question]을 통해 [감정_소분류]를 추론한다.
 - 2) 예측한 [감정_소분류] 와 [Question] 을 통해 [Answer]를 추론한다
+<br/>
+<br/>
+    - [Pre-Trained Weight](https://drive.google.com/drive/u/0/folders/1XFDGbr1ATrh1g_LSEyxZy5arHYFVc50M)
 
 
 
 
 
 ---
+### SETTING
+
+#### Computing environment
+- OS: Ubuntu 18.04.6
+- GPU : RTX 4090
+
+#### Version
+- Python : 3.9.16
+- CUDA : 11.8
+- CuDNN : 8.6.0
+- torch : 2.1.0
+- torchvision : 0.16.0
+- transformers : 4.35.2
+
+#### Question-Emotion_Training
+```bash
+!pip install gluonnlp pandas tqdm
+!pip install mxnet
+!pip install sentencepiece
+!pip install transformers
+!pip install 'git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf'
 ```
-# # 라이브러리 설치
-# !pip install gluonnlp pandas tqdm
-# !pip install mxnet
-# !pip install sentencepiece
-# !pip install transformers
-# !pip install torch
-# !pip install 'git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf'
 
-# 사용한 아나콘다 가상 환경
-# NLP (Python 3.9.16)
+#### EmotionQ-Answer_Training
+```bash
+pip install mxnet-mkl==1.6.0 numpy==1.23.1
+pip install pytorch-lightning
+```
 
-# pip install mxnet-mkl==1.6.0 numpy==1.23.1
-# pip install openpyxl
-# pip install pytorch-lightning
+#### FinalModel
+```bash
 ```
