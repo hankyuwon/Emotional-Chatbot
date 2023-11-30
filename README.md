@@ -22,14 +22,8 @@
 
 ## Model 3
 - 1) [Question]을 통해 [감정_소분류]를 추론한다.
-- 2) 예측한 [감정_소분류] 와 [Question] 을 통해 [Answer]를 추론한다
-<br/>
-<br/>
+- 2) 예측한 [감정_소분류] 와 [Question] 을 통해 [Answer]를 추론한다.
     - [Pre-Trained Weight](https://drive.google.com/drive/u/0/folders/1XFDGbr1ATrh1g_LSEyxZy5arHYFVc50M)
-
-
-
-
 
 ---
 ### SETTING
@@ -48,11 +42,11 @@
 
 #### Question-Emotion_Training
 ```bash
-!pip install gluonnlp pandas tqdm
-!pip install mxnet
-!pip install sentencepiece
-!pip install transformers
-!pip install 'git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf'
+pip install gluonnlp pandas tqdm
+pip install mxnet
+pip install sentencepiece
+pip install transformers
+pip install 'git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf'
 ```
 
 #### EmotionQ-Answer_Training
