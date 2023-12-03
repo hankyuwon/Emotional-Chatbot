@@ -11,13 +11,14 @@
 # Tokenizer : PreTrainedTokenizerFast.from_pretrained("skt/kogpt2-base-v2", bos_token=BOS, eos_token=EOS, unk_token='<unk>', pad_token=PAD, mask_token=MASK)
 # input : [Inferenced Emotion] + [Question]
 # Inference : [Answer]
+
 import torch
 
 import torch
 from transformers import PreTrainedTokenizerFast, GPT2LMHeadModel
 import torch
 from transformers import GPT2LMHeadModel
-import model1
+import Q2E_model
 import os
 
 
@@ -33,26 +34,35 @@ MASK = '<unused0>'
 SENT = '<unused1>'
 PAD = '<pad>'
 
-koGPT2_TOKENIZER = PreTrainedTokenizerFast.from_pretrained("skt/kogpt2-base-v2",
+if __name__ == '__main__':
+    
+    koGPT2_TOKENIZER = PreTrainedTokenizerFast.from_pretrained("skt/kogpt2-base-v2",
             bos_token=BOS, eos_token=EOS, unk_token='<unk>',
             pad_token=PAD, mask_token=MASK) 
-model = GPT2LMHeadModel.from_pretrained('skt/kogpt2-base-v2')
+    model = GPT2LMHeadModel.from_pretrained('skt/kogpt2-base-v2')
 
-checkpoint=torch.load("../EmotionQ-Answer_Training/Custom_Data/model_EQ2A_Custom_Data_label2map_120.pth", map_location=device)
-model.load_state_dict(checkpoint["model"])
+    model = model.to(device)
 
-if __name__ == '__main__':
+    # checkpoint=torch.load("../EmotionQ-Answer_Training/Custom_Data/model_EQ2A_Custom_Data_label2map_120.pth", map_location=device)
+    checkpoint=torch.load("/home/ssrlab/kw/2023_2/NLP/Emotional-Chatbot/EmotionQ-Answer_Training/Original_Data/model_EQ2A_OriginalData_감정_없음_30_.pth", map_location=device)
+    model.load_state_dict(checkpoint["model"])
+    
     with torch.no_grad():
         while 1:
             q = input("user > ").strip()
             if q == "quit":
                 break
             a = ""
-            emo_token = model1.predict(q)
+            emo_token, emo_str = Q2E_model.predict(q)
+            print('Predicted Emotion is ',emo_str)
             # print(emo_token)
             while 1:
-                # input_ids = torch.LongTensor(koGPT2_TOKENIZER.encode(emo_token + SENT + Q_TKN + q + SENT + '0' + A_TKN + a)).unsqueeze(dim=0) # 0 은 무슨 의미?
-                input_ids = torch.LongTensor(koGPT2_TOKENIZER.encode(emo_token + SENT + Q_TKN + q + SENT + '0' + A_TKN + a)).unsqueeze(dim=0) # 0 은 무슨 의미?
+                # Emotion token
+                input_ids = torch.LongTensor(koGPT2_TOKENIZER.encode(emo_token + SENT + Q_TKN + q + SENT + A_TKN + a)).unsqueeze(dim=0)
+                
+                # No Emotion token
+                # input_ids = torch.LongTensor(koGPT2_TOKENIZER.encode(Q_TKN + q + SENT + A_TKN + a)).unsqueeze(dim=0)
+
                 pred = model(input_ids.to(device))
                 pred = pred.logits
                 gen = koGPT2_TOKENIZER.convert_ids_to_tokens(torch.argmax(pred, dim=-1).squeeze().cpu().numpy().tolist())[-1]
