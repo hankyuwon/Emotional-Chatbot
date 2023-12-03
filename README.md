@@ -8,12 +8,12 @@
 ## 2. Question 2 Emotion
  - [Question-Emotion_Training](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/Question-Emotion_Training)
 
- - KoBERT(Pretrained on skt/kobert-base-v1)
+ - KoBERT **(Pretrained on skt/kobert-base-v1)**
 
 ## 3. (Inferenced)Emotion + Question 2 Answer
  - [EmotionQ-Answer_Training](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/EmotionQ-Answer_Training)
 
- - KoGPT2(Pretrained on skt/kogpt2-base-v2)
+ - KoGPT2 **(Pretrained on skt/kogpt2-base-v2)**
 
 ## 4. ChatBot
 - [FinalModel](https://github.com/hankyuwon/Emotional-Chatbot/blob/develop/FinalModel)

@@ -1,7 +1,7 @@
 Question-Emotion_Training
 -
 ### Introduction
-1. User의 질문을 받아 **감정**을 예측한다.
+Predict **emotion** based on the user's Question
 
 ### Data Preparation
 You can use the custom_chatbotdataset(Training).csv and custom_chatbotdataset(Validation).csv files in the './Question-Emotion_Training' folder. please refer to [Data_preprocessing README.md](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/Data_preprocessing/README.md).

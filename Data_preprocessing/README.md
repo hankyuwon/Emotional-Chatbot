@@ -2,7 +2,7 @@ Data_preprocessing
 -
 
 ### Usage
-AI hub [감성 대화 말뭉치](https://aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=realm&dataSetSn=86) 데이터 셋
+AI hub [감성 대화 말뭉치](https://aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=realm&dataSetSn=86) dataset
 
 #### Original Dataset
 - 6가지의 "감정_대분류"와, 60가지의 "감정_소분류"로 이루어진 대화 데이터셋

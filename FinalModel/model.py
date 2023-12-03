@@ -18,9 +18,9 @@ import torch
 from transformers import PreTrainedTokenizerFast, GPT2LMHeadModel
 import torch
 from transformers import GPT2LMHeadModel
-import Q2E_model
+import Q2E_model as Q2E_model
 import os
-
+import argparse
 
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
@@ -34,6 +34,15 @@ MASK = '<unused0>'
 SENT = '<unused1>'
 PAD = '<pad>'
 
+parser = argparse.ArgumentParser(description='Emotion-Chatbot')
+
+parser.add_argument('--checkpoint',
+                    default = 'model_EQ2A_Custom_Data_label2map_120',
+                    help = 'Please select the checkpoint. You can choose from: model_EQ2A_Custom_Data_label2map_120, model_EQ2A_Custom_Data_label2string_30, model_EQ2A_Custom_Data_Original_20, model_EQ2A_OriginalData_NoEmotion_30. '
+)
+
+args = parser.parse_args()
+
 if __name__ == '__main__':
     
     koGPT2_TOKENIZER = PreTrainedTokenizerFast.from_pretrained("skt/kogpt2-base-v2",
@@ -42,9 +51,8 @@ if __name__ == '__main__':
     model = GPT2LMHeadModel.from_pretrained('skt/kogpt2-base-v2')
 
     model = model.to(device)
-
-    # checkpoint=torch.load("../EmotionQ-Answer_Training/Custom_Data/model_EQ2A_Custom_Data_label2map_120.pth", map_location=device)
-    checkpoint=torch.load("/home/ssrlab/kw/2023_2/NLP/Emotional-Chatbot/EmotionQ-Answer_Training/Original_Data/model_EQ2A_OriginalData_감정_없음_30_.pth", map_location=device)
+    
+    checkpoint = torch.load("../EmotionQ-Answer_Training/save_model/{}.pth".format(args.checkpoint), map_location=device)
     model.load_state_dict(checkpoint["model"])
     
     with torch.no_grad():
@@ -54,19 +62,30 @@ if __name__ == '__main__':
                 break
             a = ""
             emo_token, emo_str = Q2E_model.predict(q)
-            print('Predicted Emotion is ',emo_str)
-            # print(emo_token)
-            while 1:
-                # Emotion token
-                input_ids = torch.LongTensor(koGPT2_TOKENIZER.encode(emo_token + SENT + Q_TKN + q + SENT + A_TKN + a)).unsqueeze(dim=0)
-                
-                # No Emotion token
-                # input_ids = torch.LongTensor(koGPT2_TOKENIZER.encode(Q_TKN + q + SENT + A_TKN + a)).unsqueeze(dim=0)
+            # print('Predicted Emotion is ',emo_str)
+            
+            # Emotion Token을 사용하지 않은 GPT model
+            if args.checkpoint in 'noEmotion':
+                while 1:
+                    input_ids = torch.LongTensor(koGPT2_TOKENIZER.encode(Q_TKN + q + SENT + A_TKN + a)).unsqueeze(dim=0)
 
-                pred = model(input_ids.to(device))
-                pred = pred.logits
-                gen = koGPT2_TOKENIZER.convert_ids_to_tokens(torch.argmax(pred, dim=-1).squeeze().cpu().numpy().tolist())[-1]
-                if gen == EOS:
-                    break
-                a += gen.replace("▁", " ")
-            print("Chatbot > {}".format(a.strip()))
+                    pred = model(input_ids.to(device))
+                    pred = pred.logits
+                    gen = koGPT2_TOKENIZER.convert_ids_to_tokens(torch.argmax(pred, dim=-1).squeeze().cpu().numpy().tolist())[-1]
+                    if gen == EOS:
+                        break
+                    a += gen.replace("▁", " ")
+                print("Chatbot > {}".format(a.strip()))
+                
+            # Emotion Token을 사용하는 GPT model
+            else:
+                while 1:
+                    input_ids = torch.LongTensor(koGPT2_TOKENIZER.encode(emo_token + SENT + Q_TKN + q + SENT + A_TKN + a)).unsqueeze(dim=0)
+
+                    pred = model(input_ids.to(device))
+                    pred = pred.logits
+                    gen = koGPT2_TOKENIZER.convert_ids_to_tokens(torch.argmax(pred, dim=-1).squeeze().cpu().numpy().tolist())[-1]
+                    if gen == EOS:
+                        break
+                    a += gen.replace("▁", " ")
+                print("Chatbot > {}".format(a.strip()))
