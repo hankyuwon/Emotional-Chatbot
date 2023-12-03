@@ -110,7 +110,8 @@ optimizer_grouped_parameters = [
 optimizer = torch.optim.AdamW(optimizer_grouped_parameters, lr=learning_rate)
 loss_fn = nn.CrossEntropyLoss().to(device)
 
-checkpoint=torch.load("../Question-Emotion_Training/save_model/QtEmodel120.pth", map_location=device)
+# checkpoint=torch.load("../Question-Emotion_Training/save_model/QtEmodel120.pth", map_location=device)
+checkpoint = torch.load("./Question-Emotion_Training/save_model/QtEmodel120.pth", map_location=device)
 model.load_state_dict(checkpoint["model"])
 optimizer.load_state_dict(checkpoint["optimizer"])
 
