@@ -25,4 +25,4 @@ user > 내가 더 믿고 신뢰해야지. 나는 그분께 정말 인정받는 �
 ```
 
 #### Notes:
- - Please place the downloaded weights into the './Question-Emotion_Training/save_model' folder.
+ - Please place the downloaded 'QtEmodel120.pth' weights into the './Question-Emotion_Training/save_model' folder.
