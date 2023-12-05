@@ -1,22 +1,72 @@
 # Emotional-Chatbot
 
-최근 몇 년 동안, 자연어처리와 인공지능 기술의 발전은 기계와 인간간의 소통을 혁신적으로 증가시켰다. 이러한 발전의 중심에는 Chat-GPT와 같은 대화형 모델이 있으며, 인간과 기계 간의 대화를 보다 효과적으로 가능하게 한다 인간의 대화에서는 대화의 감정과 맥락을 이해하고 상황에 맞는 적절한 대답을 선택하는 것이 중요하다. 하지만, AI는 대부분 문맥을 기반으로 작동하며, 사전에 학습된 데이터와 패턴을 활용하여 응답을 생성한다. 이로 인해 현재 Chatbot과 같은 AI는 감정을 완벽하게 해석하거나 대응하는 데 어려움을 겪을 수 있다. 따라서, 감정과 대화를 기반으로 KoGPT를 학습하여 감정을 이해하는 ChatBot을 만드는 것이 이번 프로젝트의 목표이다.  
+* [Dataset and Checkpoints](#1-dataset-and-checkpoints)
+* [Usage](#2-usage)
+  * [Preparing for Forced Attention](#preparing-for-forced-attention)
+  * [Model](#model)
+  * [Inference](#inference)
+* [Setting](#setting)
 
-## 1. Data Preprocessing
+
+## 1. Dataset and Checkpoints
 - [Data Preprocessing](https://github.com/hankyuwon/Emotional-Chatbot/blob/develop/Data_preprocessing)
 
-## 2. Question 2 Emotion
- - [Question-Emotion_Training](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/Question-Emotion_Training)
+ - KoBERT 
+    - [**(Pretrained Weight)**](https://drive.google.com/drive/folders/1V4v0ppYLoDvwemRnVpd-0QCYnCnqDSsl?hl=ko)
+    - Question-Emotion_Training [README.md](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/Question-Emotion_Training)
 
- - KoBERT **(Pretrained on skt/kobert-base-v1)**
+ - KoGPT2
+    -  [**(Pretrained Weight)**](https://drive.google.com/drive/folders/13MgcxhXt_BPmEg9-LK1y8Af2gPoBrRI2?hl=ko)
+    - EmotionQ-Answer_Training [README.md](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/EmotionQ-Answer_Training)
 
-## 3. (Inferenced)Emotion + Question 2 Answer
- - [EmotionQ-Answer_Training](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/EmotionQ-Answer_Training)
+## 2. Usage
+- [FinalModel](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/FinalModel)
 
- - KoGPT2 **(Pretrained on skt/kogpt2-base-v2)**
+### Preparing for Forced Attention
+-  Modify the code within the GPT2Attention class as follows: **Issues** [#2](https://github.com/hankyuwon/Emotional-Chatbot/issues/2)
 
-## 4. ChatBot
-- [FinalModel](https://github.com/hankyuwon/Emotional-Chatbot/blob/develop/FinalModel)
+### Model
+| Model | Data | Emotion | label | ForcedAttention |
+|---|---|---|---|---|
+| model_EQ2A_OriginalData_noEmotion_30 | OriginalData | N | - | N |
+| model_EQ2A_OriginalData_60label2map_120 | OriginalData | Y | to Token | N |
+| model_EQ2A_Custom_Data_60label2string_30 | CustomData | Y | to String | N |
+| model_EQ2A_Custom_Data_60label2map_120 | CustomData | Y | to Token | N |
+| model_EQ2A_Custom_Data_60label2map_Forced_Attention_120 | CustomData | Y | to Token | Y |
+
+### Inference
+```
+# cd FinalModel
+python model.py --checkpoint <CHECKPOINT_FILE>
+```
+
+
+### Inference Example
+```
+python model.py --checkpoint model_EQ2A_Custom_Data_60label2map_120
+
+user > 입사 새내기지만 우리 팀을 잘 이끌어 주시는 팀장님이 있어서 감사함을 느껴.
+Chatbot > 팀장님께 고마움을 표현할 방법이 있을까요
+
+user > 그 분이 보기와는 달리 실제로는 인간미 넘치고 주어진 업무는 엄청 깔끔하게 하셔.
+Chatbot > 이미지와는 다른 모습이 있군요
+
+user > 내가 더 믿고 신뢰해야지. 나는 그분께 정말 인정받는 신입이 되고 싶어.
+Chatbot > 신뢰하는 제일 큰 이유는 무엇인가요
+```
+
+```
+python model.py --checkpoint model_EQ2A_Custom_Data_60label2map_Forced_Attention_120
+
+user >
+Chatbot >
+
+user >
+Chatbot >
+
+user >
+Chatbot >
+```
 
 ---
 ### SETTING
