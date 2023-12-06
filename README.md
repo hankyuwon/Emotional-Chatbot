@@ -42,9 +42,15 @@ python model.py --checkpoint <CHECKPOINT_FILE>
 
 
 ### Inference Example
-```
-37 | 친구들이 요즘 나를 따돌려. 내가 혼자라는 게 너무 슬퍼. |혼자 된 기분이 너무 슬프겠어요.
-```
+#### Custom_chatbotdataset(Validation).csv 
+|label|Question|Answer|
+|---|---|---
+|37(우울한)|친구들이 요즘 나를 따돌려. 내가 혼자라는 게 너무 슬퍼.|혼자 된 기분이 너무 슬프겠어요.|
+|25(성가신)|다음번 흡연하러 나가기 전에 담배를 들고 나가라고 이야기해야 할 것 같아.|다음 번에는 후임에게 담배를 들고 나가라고 말하려 하시는군요.|
+|31(악의적인)|병이 있어서 일을 할 수 없는데 그 마음을 몰라주니 너무 화가 나.|병 때문에 일하지 못하는 마음을 몰라줘서 화가 나시는군요. 어떻게 속상함을 조금이라도 해소할 수 있을까요?|
+
+<br>
+
 ```
 python model.py --checkpoint model_EQ2A_Custom_Data_60label2map_120
 
