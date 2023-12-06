@@ -43,29 +43,32 @@ python model.py --checkpoint <CHECKPOINT_FILE>
 
 ### Inference Example
 ```
+37 | 친구들이 요즘 나를 따돌려. 내가 혼자라는 게 너무 슬퍼. |혼자 된 기분이 너무 슬프겠어요.
+```
+```
 python model.py --checkpoint model_EQ2A_Custom_Data_60label2map_120
 
-user > 입사 새내기지만 우리 팀을 잘 이끌어 주시는 팀장님이 있어서 감사함을 느껴.
-Chatbot > 팀장님께 고마움을 표현할 방법이 있을까요
+user > 친구들이 요즘 나를 따돌려. 내가 혼자라는 게 너무 슬퍼.
+Chatbot > 따돌림을 당해내느라 많이 힘드시군요
 
-user > 그 분이 보기와는 달리 실제로는 인간미 넘치고 주어진 업무는 엄청 깔끔하게 하셔.
-Chatbot > 이미지와는 다른 모습이 있군요
+user > 다음번 흡연하러 나가기 전에 담배를 들고 나가라고 이야기해야 할 것 같아.
+Chatbot > 다음번에는 후임이 잊지 않고 담배를 챙겼으면 좋겠어요
 
-user > 내가 더 믿고 신뢰해야지. 나는 그분께 정말 인정받는 신입이 되고 싶어.
-Chatbot > 신뢰하는 제일 큰 이유는 무엇인가요
+user > 병이 있어서 일을 할 수 없는데 그 마음을 몰라주니 너무 화가 나
+Chatbot > 현재의 감정을 나눌 수 있는 사람이 주위에 있었으면 좋겠네요
 ```
 
 ```
 python model.py --checkpoint model_EQ2A_Custom_Data_60label2map_Forced_Attention_120
 
-user >
-Chatbot >
+user > 친구들이 요즘 나를 따돌려. 내가 혼자라는 게 너무 슬퍼.
+Chatbot > 혼자라는 게 슬프겠지만 분명 많이 힘내실 거예요
 
-user >
-Chatbot >
+user > 다음번 흡연하러 나가기 전에 담배를 들고 나가라고 이야기해야 할 것 같아.
+Chatbot > 다음번에는 후임이 잊지 않고 담배를 챙겼으면 좋겠어요
 
-user >
-Chatbot >
+user > 병이 있어서 일을 할 수 없는데 그 마음을 몰라주니 너무 화가 나
+Chatbot > 지금 상황에 화가 나는 감정을 나눌 수 있는 사람이 있었으면 좋겠어요
 ```
 
 ---
