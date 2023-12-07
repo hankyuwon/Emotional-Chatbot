@@ -1,12 +1,5 @@
 # Emotional-Chatbot
 
-* [Dataset and Checkpoints](#1-dataset-and-checkpoints)
-* [Usage](#2-usage)
-  * [Preparing for Forced Attention](#preparing-for-forced-attention)
-  * [Model](#model)
-  * [Inference](#inference)
-* [Setting](#setting)
-
 ## Installation
 ```
 pip install gluonnlp pandas tqdm
@@ -24,17 +17,21 @@ pip install pytorch-lightning
 
 ## Checkpoint
  - KoBERT 
-    - Download [**(Pretrained Weight)**](https://drive.google.com/drive/folders/1V4v0ppYLoDvwemRnVpd-0QCYnCnqDSsl?hl=ko) and Replace ```'./Question-Emotion_Training/save_model```
+    - Download [**(Pretrained Weight)**](https://drive.google.com/drive/folders/1V4v0ppYLoDvwemRnVpd-0QCYnCnqDSsl?hl=ko) and Replace './Question-Emotion_Training/save_model'
     - [README.md](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/Question-Emotion_Training)
 
  - KoGPT2
-    -  Download [**(Pretrained Weight)**](https://drive.google.com/drive/folders/13MgcxhXt_BPmEg9-LK1y8Af2gPoBrRI2?hl=ko) and Replace ```'./EmotionQ-Answer_Training/save_model```
+    -  Download [**(Pretrained Weight)**](https://drive.google.com/drive/folders/13MgcxhXt_BPmEg9-LK1y8Af2gPoBrRI2?hl=ko) and Replace './EmotionQ-Answer_Training/save_model'
     - [README.md](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/EmotionQ-Answer_Training)
+
+</br>
 
 ## Preparing for Forced Attention
 -  Modify the code within the GPT2Attention class as follows: **Issues** [#2](https://github.com/hankyuwon/Emotional-Chatbot/issues/2)
 
-### Inference
+</br>
+
+## Inference
 ```
 # cd FinalModel
 python model.py --checkpoint <KoGPT2 CHECKPOINT_FILE NAME>
