@@ -7,42 +7,42 @@
   * [Inference](#inference)
 * [Setting](#setting)
 
+## Installation
+```
+pip install gluonnlp pandas tqdm
+pip install mxnet
+pip install sentencepiece
+pip install transformers
+pip install 'git+https://github.com/SKTBrain/KoBERT.git#egg=kobert_tokenizer&subdirectory=kobert_hf'
+pip install mxnet-mkl==1.6.0 numpy==1.23.1
+pip install pytorch-lightning
+```
 
-## 1. Dataset and Checkpoints
+## Dataset
 - [Data Preprocessing](https://github.com/hankyuwon/Emotional-Chatbot/blob/develop/Data_preprocessing)
 
+
+## Checkpoint
  - KoBERT 
-    - [**(Pretrained Weight)**](https://drive.google.com/drive/folders/1V4v0ppYLoDvwemRnVpd-0QCYnCnqDSsl?hl=ko) / Replace
-    - Question-Emotion_Training [README.md](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/Question-Emotion_Training)
+    - Download [**(Pretrained Weight)**](https://drive.google.com/drive/folders/1V4v0ppYLoDvwemRnVpd-0QCYnCnqDSsl?hl=ko) and Replace ```'./Question-Emotion_Training/save_model```
+    - [README.md](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/Question-Emotion_Training)
 
  - KoGPT2
-    -  [**(Pretrained Weight)**](https://drive.google.com/drive/folders/13MgcxhXt_BPmEg9-LK1y8Af2gPoBrRI2?hl=ko)
-    - EmotionQ-Answer_Training [README.md](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/EmotionQ-Answer_Training)
+    -  Download [**(Pretrained Weight)**](https://drive.google.com/drive/folders/13MgcxhXt_BPmEg9-LK1y8Af2gPoBrRI2?hl=ko) and Replace ```'./EmotionQ-Answer_Training/save_model```
+    - [README.md](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/EmotionQ-Answer_Training)
 
-## 2. Usage
-- [FinalModel](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/FinalModel)
-
-### Preparing for Forced Attention
+## Preparing for Forced Attention
 -  Modify the code within the GPT2Attention class as follows: **Issues** [#2](https://github.com/hankyuwon/Emotional-Chatbot/issues/2)
-
-### Model
-| Model | Data | Emotion | label | ForcedAttention |
-|---|---|---|---|---|
-| model_EQ2A_OriginalData_noEmotion_30 | OriginalData | N | - | N |
-| model_EQ2A_OriginalData_60label2map_120 | OriginalData | Y | to Token | N |
-| model_EQ2A_Custom_Data_60label2string_30 | CustomData | Y | to String | N |
-| model_EQ2A_Custom_Data_60label2map_120 | CustomData | Y | to Token | N |
-| model_EQ2A_Custom_Data_60label2map_Forced_Attention_120 | CustomData | Y | to Token | Y |
 
 ### Inference
 ```
 # cd FinalModel
-python model.py --checkpoint <CHECKPOINT_FILE>
+python model.py --checkpoint <KoGPT2 CHECKPOINT_FILE NAME>
 ```
 
 
 ### Inference Example
-#### Custom_chatbotdataset(Validation).csv 
+There is **Custom_chatbotdataset(Validation).csv**
 |label|Question|Answer|
 |---|---|---
 |37(우울한)|친구들이 요즘 나를 따돌려. 내가 혼자라는 게 너무 슬퍼.|혼자 된 기분이 너무 슬프겠어요.|
