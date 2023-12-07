@@ -1,4 +1,5 @@
 # Emotional-Chatbot
+Pytorch implementation for a chatbot understanding emotions using Forced Attention
 
 ## Installation
 ```
