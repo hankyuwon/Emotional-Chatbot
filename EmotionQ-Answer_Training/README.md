@@ -1,19 +1,8 @@
 EmotionQ-Answer_Training
 -
 ### Introduction
-1. User의 질문을 받아 질문의 **감정**을 **예측**한다.
-2. **예측된 감정**과 User의 질문을 KoGPT의 입력으로 사용한다.
-
-
-### Model
-| Model | Data | Emotion | label | ForcedAttention |
-|---|---|---|---|---|
-| model_EQ2A_**OriginalData**_**noEmotion**_30 | OriginalData | N | - | N |
-| model_EQ2A_**OriginalData**_**60label2map**_120 | OriginalData | Y | to Token | N |
-| model_EQ2A_**Custom_Data**_**60label2string**_30 | CustomData | Y | to String | N |
-| model_EQ2A_**Custom_Data**_**60label2map**_120 | CustomData | Y | to Token | N |
-| model_EQ2A_**Custom_Data**_**60label2map**_**Forced_Attention**_120 | CustomData | Y | to Token | Y |
-
+1. To predict the **emotional context** of user queries
+2. Uses the **predicted emotions** along with **user queries** as inputs for KoGPT
 
 ### Proposed Methodology
 1. Difference between **Original Data** vs **Custom Data**
@@ -65,3 +54,16 @@ EmotionQ-Answer_Training
 
         emotion = turn["label"] # An example of emotion : '<unused10>', '<unused11>' ...
    ```
+</br>
+</br>
+   
+### Model
+The list of available models and the applied techniques table
+
+| Model | Data | Emotion | label | ForcedAttention |
+|---|---|---|---|---|
+| model_EQ2A_**OriginalData**_**noEmotion**_30 | OriginalData | N | - | N |
+| model_EQ2A_**OriginalData**_**60label2map**_120 | OriginalData | Y | to Token | N |
+| model_EQ2A_**Custom_Data**_**60label2string**_30 | CustomData | Y | to String | N |
+| model_EQ2A_**Custom_Data**_**60label2map**_120 | CustomData | Y | to Token | N |
+| model_EQ2A_**Custom_Data**_**60label2map** _**Forced_Attention**_120 | CustomData | Y | to Token | Y |
