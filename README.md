@@ -40,7 +40,7 @@ python model.py --checkpoint <KoGPT2 CHECKPOINT_FILE NAME>
 
 
 ### Inference Example
-There is **Custom_chatbotdataset(Validation).csv**
+We have example data for some emotions, questions, answers in **Custom_chatbotdataset(Validation).csv**
 |label|Question|Answer|
 |---|---|---
 |37(우울한)|친구들이 요즘 나를 따돌려. 내가 혼자라는 게 너무 슬퍼.|혼자 된 기분이 너무 슬프겠어요.|
