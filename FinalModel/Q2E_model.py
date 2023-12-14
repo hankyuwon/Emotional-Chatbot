@@ -39,12 +39,7 @@ emotion2Token_map = {
     1: '<unused64>', 5: '<unused65>', 4: '<unused66>', 0: '<unused67>'
 }
 
-# Model 1
 
-tokenizer = KoBERTTokenizer.from_pretrained('skt/kobert-base-v1')
-bertmodel = BertModel.from_pretrained('skt/kobert-base-v1', return_dict=False)
-vocab = nlp.vocab.BERTVocab.from_sentencepiece(tokenizer.vocab_file, padding_token='[PAD]')
-tok = tokenizer.tokenize
 
 # Setting parameters
 max_len = 64
@@ -55,89 +50,104 @@ max_grad_norm = 1
 log_interval = 200
 learning_rate =  5e-5
 
-class BERTDataset(Dataset):
-    def __init__(self, dataset, sent_idx, label_idx, bert_tokenizer, vocab, max_len,
-                 pad, pair):
-   
-        transform = nlp.data.BERTSentenceTransform(
-            bert_tokenizer, max_seq_length=max_len,vocab=vocab, pad=pad, pair=pair)
-        
-        self.sentences = [transform([i[sent_idx]]) for i in dataset]
-        self.labels = [np.int32(i[label_idx]) for i in dataset]
 
-    def __getitem__(self, i):
-        return (self.sentences[i] + (self.labels[i], ))
-         
-    def __len__(self):
-        return (len(self.labels))
 
-class BERTClassifier(nn.Module):
-    def __init__(self,
-                 bert,
-                 hidden_size = 768,
-                 num_classes=58,
-                 dr_rate=None,
-                 params=None):
-        super(BERTClassifier, self).__init__()
-        self.bert = bert
-        self.dr_rate = dr_rate
-
-        self.classifier = nn.Linear(hidden_size , num_classes)
-        if dr_rate:
-            self.dropout = nn.Dropout(p=dr_rate)
+if __name__ == '__main__':
     
-    def gen_attention_mask(self, token_ids, valid_length):
-        attention_mask = torch.zeros_like(token_ids)
-        for i, v in enumerate(valid_length):
-            attention_mask[i][:v] = 1
-        return attention_mask.float()
+    class BERTDataset(Dataset):
+        def __init__(self, dataset, sent_idx, label_idx, bert_tokenizer, vocab, max_len,
+                    pad, pair):
+    
+            transform = nlp.data.BERTSentenceTransform(
+                bert_tokenizer, max_seq_length=max_len,vocab=vocab, pad=pad, pair=pair)
+            
+            self.sentences = [transform([i[sent_idx]]) for i in dataset]
+            self.labels = [np.int32(i[label_idx]) for i in dataset]
 
-    def forward(self, token_ids, valid_length, segment_ids):
-        attention_mask = self.gen_attention_mask(token_ids, valid_length)
+        def __getitem__(self, i):
+            return (self.sentences[i] + (self.labels[i], ))
+            
+        def __len__(self):
+            return (len(self.labels))
+
+    class BERTClassifier(nn.Module):
+        def __init__(self,
+                    bert,
+                    hidden_size = 768,
+                    num_classes=58,
+                    dr_rate=None,
+                    params=None):
+            super(BERTClassifier, self).__init__()
+            self.bert = bert
+            self.dr_rate = dr_rate
+
+            self.classifier = nn.Linear(hidden_size , num_classes)
+            if dr_rate:
+                self.dropout = nn.Dropout(p=dr_rate)
         
-        _, pooler = self.bert(input_ids = token_ids, token_type_ids = segment_ids.long(), attention_mask = attention_mask.float().to(token_ids.device))
-        if self.dr_rate:
-            out = self.dropout(pooler)
-        return self.classifier(out)
+        def gen_attention_mask(self, token_ids, valid_length):
+            attention_mask = torch.zeros_like(token_ids)
+            for i, v in enumerate(valid_length):
+                attention_mask[i][:v] = 1
+            return attention_mask.float()
 
-model = BERTClassifier(bertmodel, dr_rate=0.5).to(device)
-# Prepare optimizer and schedule (linear warmup and decay)
-no_decay = ['bias', 'LayerNorm.weight']
-optimizer_grouped_parameters = [
-    {'params': [p for n, p in model.named_parameters() if not any(nd in n for nd in no_decay)], 'weight_decay': 0.01},
-    {'params': [p for n, p in model.named_parameters() if any(nd in n for nd in no_decay)], 'weight_decay': 0.0}
-]
-optimizer = torch.optim.AdamW(optimizer_grouped_parameters, lr=learning_rate)
-loss_fn = nn.CrossEntropyLoss().to(device)
+        def forward(self, token_ids, valid_length, segment_ids):
+            attention_mask = self.gen_attention_mask(token_ids, valid_length)
+            
+            _, pooler = self.bert(input_ids = token_ids, token_type_ids = segment_ids.long(), attention_mask = attention_mask.float().to(token_ids.device))
+            if self.dr_rate:
+                out = self.dropout(pooler)
+            return self.classifier(out)
 
-# checkpoint=torch.load("../Question-Emotion_Training/save_model/QtEmodel120.pth", map_location=device)
-checkpoint = torch.load("../Question-Emotion_Training/save_model/QtEmodel120.pth", map_location=device)
-model.load_state_dict(checkpoint["model"])
-optimizer.load_state_dict(checkpoint["optimizer"])
+    # Model 1
+
+    tokenizer = KoBERTTokenizer.from_pretrained('skt/kobert-base-v1')
+    bertmodel = BertModel.from_pretrained('skt/kobert-base-v1', return_dict=False)
+    vocab = nlp.vocab.BERTVocab.from_sentencepiece(tokenizer.vocab_file, padding_token='[PAD]')
+    tok = tokenizer.tokenize
+    
+    model = BERTClassifier(bertmodel, dr_rate=0.5).to(device)
+    # Prepare optimizer and schedule (linear warmup and decay)
+    no_decay = ['bias', 'LayerNorm.weight']
+    optimizer_grouped_parameters = [
+        {'params': [p for n, p in model.named_parameters() if not any(nd in n for nd in no_decay)], 'weight_decay': 0.01},
+        {'params': [p for n, p in model.named_parameters() if any(nd in n for nd in no_decay)], 'weight_decay': 0.0}
+    ]
+    optimizer = torch.optim.AdamW(optimizer_grouped_parameters, lr=learning_rate)
+    loss_fn = nn.CrossEntropyLoss().to(device)
+
+    # checkpoint=torch.load("../Question-Emotion_Training/save_model/QtEmodel120.pth", map_location=device)
+    checkpoint = torch.load("../Question-Emotion_Training/save_model/QtEmodel120.pth", map_location=device)
+    model.load_state_dict(checkpoint["model"])
+    optimizer.load_state_dict(checkpoint["optimizer"])
 
 
-def predict(predict_sentence):
-    data = [predict_sentence, '0']
-    dataset_another = [data]
-    another_test = BERTDataset(dataset_another, 0, 1, tok, vocab, max_len, True, False)
-    test_dataloader = torch.utils.data.DataLoader(another_test, batch_size = batch_size, num_workers = 4)
+    def predict(predict_sentence):
+        data = [predict_sentence, '0']
+        dataset_another = [data]
+        another_test = BERTDataset(dataset_another, 0, 1, tok, vocab, max_len, True, False)
+        test_dataloader = torch.utils.data.DataLoader(another_test, batch_size = batch_size, num_workers = 4)
 
-    model.eval()
-    for batch_id, (token_ids, valid_length, segment_ids, label) in enumerate(test_dataloader):
-        token_ids = token_ids.long().to(device)
-        segment_ids = segment_ids.long().to(device)
+        model.eval()
+        for batch_id, (token_ids, valid_length, segment_ids, label) in enumerate(test_dataloader):
+            token_ids = token_ids.long().to(device)
+            segment_ids = segment_ids.long().to(device)
 
-        valid_length = valid_length
-        label = label.long().to(device)
+            valid_length = valid_length
+            label = label.long().to(device)
 
-        out = model(token_ids, valid_length, segment_ids)
-        test_eval = []
-        for i in out:
-            logits = i
-            logits = logits.detach().cpu().numpy()
-            test_eval.append([np.argmax(logits)])
+            out = model(token_ids, valid_length, segment_ids)
+            test_eval = []
+            for i in out:
+                logits = i
+                logits = logits.detach().cpu().numpy()
+                test_eval.append([np.argmax(logits)])
 
-    # print(">> 입력하신 내용의 감정은 '",emotion_mapping[test_eval[0][0]],"' 입니다.")
-    # print(">> 입력하신 내용의 감정 라벨은 '",test_eval[0][0],"' 입니다.")
-    # print(">> 입력하신 내용의 토큰은 " ,emotion2Token_map.get(test_eval[0][0]), " 입니다.")
-    return emotion2Token_map.get(test_eval[0][0]), emotion_mapping[test_eval[0][0]]
+        print(">> 입력하신 내용의 감정은 '",emotion_mapping[test_eval[0][0]],"' 입니다.")
+        print(">> 입력하신 내용의 감정 라벨은 '",test_eval[0][0],"' 입니다.")
+        print(">> 입력하신 내용의 토큰은 " ,emotion2Token_map.get(test_eval[0][0]), " 입니다.")
+        return
+        # return emotion2Token_map.get(test_eval[0][0]), emotion_mapping[test_eval[0][0]]
+    
+    q = input("user > ").strip()
+    pred = predict(q)
