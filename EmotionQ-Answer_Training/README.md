@@ -33,8 +33,8 @@ EmotionQ-Answer_Training
 
         emotion = turn["label"] # An example of emotion : 1, 2, 3, ...
         emotion = str(emotion) # int -> string
-
-
+   ```
+   ```python
    # to token mean
 
    emotion2Token_map = {
