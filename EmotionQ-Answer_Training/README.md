@@ -11,7 +11,6 @@ EmotionQ-Answer_Training
    ```python
    # Q_TKN : <usr>
    # q : user chat
-   # SENT : <unused1>
    # A_TKN : <sys>
    # a : Inferenced Answer(initial: "")
 
