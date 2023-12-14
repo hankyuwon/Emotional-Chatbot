@@ -17,10 +17,10 @@ EmotionQ-Answer_Training
 
    # No Emotion Token mean chatbot does not learn emotions
    
-   koGPT2_TOKENIZER.encode(Q_TKN + q + SENT + A_TKN + a)
+   koGPT2_TOKENIZER.encode(Q_TKN + q + A_TKN + a)
 
    # Emotion Token
-   KoGPT2_TOKENIZER.encode(emo_token + SENT + Q_TKN + q + SENT + A_TKN + a)
+   KoGPT2_TOKENIZER.encode(emo_token + Q_TKN + q + A_TKN + a)
     ```
 
 3. Whether the label converted to a **string** or to a **token**
@@ -54,16 +54,3 @@ EmotionQ-Answer_Training
 
         emotion = turn["label"] # An example of emotion : '<unused10>', '<unused11>' ...
    ```
-</br>
-</br>
-   
-### Model
-The list of available models and the applied techniques table
-
-| Model | Data | Emotion | label | ForcedAttention |
-|---|---|---|---|---|
-| model_EQ2A_**OriginalData**_**noEmotion**_30 | OriginalData | N | - | N |
-| model_EQ2A_**OriginalData**_**60label2map**_120 | OriginalData | Y | to Token | N |
-| model_EQ2A_**Custom_Data**_**60label2string**_30 | CustomData | Y | to String | N |
-| model_EQ2A_**Custom_Data**_**60label2map**_120 | CustomData | Y | to Token | N |
-| model_EQ2A_**Custom_Data**_**60label2map** _**Forced_Attention**_120 | CustomData | Y | to Token | Y |
