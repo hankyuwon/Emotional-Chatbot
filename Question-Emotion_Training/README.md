@@ -5,7 +5,10 @@ Predict **emotion** based on the user's Question
 
 
 ### Inference Example
-```
+```python
+# cd FinalModel
+python Q2E_model_test.py
+
 user > 입사 새내기지만 우리 팀을 잘 이끌어 주시는 팀장님이 있어서 감사함을 느껴.
 >>> Predicted Emotion is "감사하는"
 
