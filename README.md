@@ -13,17 +13,17 @@ pip install pytorch-lightning
 ```
 
 ## Dataset
-- [Data Preprocessing](https://github.com/hankyuwon/Emotional-Chatbot/blob/develop/Data_preprocessing)
+- [Data Preprocessing](https://github.com/hankyuwon/Emotional-Chatbot/blob/main/Data_preprocessing)
 
 
 ## Checkpoint
  - KoBERT 
     - Download [**(Pretrained Weight)**](https://drive.google.com/drive/folders/1V4v0ppYLoDvwemRnVpd-0QCYnCnqDSsl?hl=ko) and Replace './Question-Emotion_Training/save_model'
-    - [README.md](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/Question-Emotion_Training)
+    - [README.md](https://github.com/hankyuwon/Emotional-Chatbot/tree/main/Question-Emotion_Training)
 
  - KoGPT2
     -  Download [**(Pretrained Weight)**](https://drive.google.com/drive/folders/13MgcxhXt_BPmEg9-LK1y8Af2gPoBrRI2?hl=ko) and Replace './EmotionQ-Answer_Training/save_model'
-    - [README.md](https://github.com/hankyuwon/Emotional-Chatbot/tree/develop/EmotionQ-Answer_Training)
+    - [README.md](https://github.com/hankyuwon/Emotional-Chatbot/tree/main/EmotionQ-Answer_Training)
 
 </br>
 
