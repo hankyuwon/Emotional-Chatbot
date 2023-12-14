@@ -1,17 +1,3 @@
-# <Model 1>
-# Model : BertModel (Pretrained on skt/kobert-base-v1)
-# Tokenizer : KoBERTTokenizer.from_pretrained('skt/kobert-base-v1')
-# vocab : BERTvocab
-# input : [Question]
-# Inference : [Emotion]
-
-
-# <Model 2>
-# Model : KoGPT2 (Pretrained on skt/kogpt2-base-v2)
-# Tokenizer : PreTrainedTokenizerFast.from_pretrained("skt/kogpt2-base-v2", bos_token=BOS, eos_token=EOS, unk_token='<unk>', pad_token=PAD, mask_token=MASK)
-# input : [Inferenced Emotion] + [Question]
-# Inference : [Answer]
-
 import torch
 
 import torch
