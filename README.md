@@ -50,6 +50,19 @@ We have example data for some emotions, questions, answers in **Custom_chatbotda
 <br>
 
 ```
+python model.py --checkpoint model_EQ2A_Custom_Data_60label2string_30
+
+user > 친구들이 요즘 나를 따돌려. 내가 혼자라는 게 너무 슬퍼.
+Chatbot > 혼자라는 게 정말 슬프시군요
+
+user > 다음번 흡연하러 나가기 전에 담배를 들고 나가라고 이야기해야 할 것 같아.
+Chatbot > 남편에게 잘 말씀하셔서 고민이 해결되었으면 좋겠어요
+
+user > 병이 있어서 일을 할 수 없는데 그 마음을 몰라주니 너무 화가 나
+Chatbot > 지금 감정을 나눌 수 있는 사람이 주위에 있었으면 좋겠어요
+```
+
+```
 python model.py --checkpoint model_EQ2A_Custom_Data_60label2map_120
 
 user > 친구들이 요즘 나를 따돌려. 내가 혼자라는 게 너무 슬퍼.
